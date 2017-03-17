@@ -1,4 +1,5 @@
-<?php namespace Nilesh\ResumeParser;
+<?php 
+namespace Nilesh\ResumeParser;
 
 use Illuminate\Support\ServiceProvider;
 use Nilesh\ResumeParser\ResumeParser;
@@ -12,7 +13,9 @@ class ResumeParserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->publishes([
+            __DIR__.'/../config/bighelpconfig.php' => config_path('bighelpconfig.php'),
+        ]);
     }
 
     /**
@@ -22,36 +25,11 @@ class ResumeParserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
-    }
-
-    public function getResumeData($fileurl)
-    {
+        $this->app->bind('nilesh-resumeparser',function(){
+          return new ResumeParser();
+        });
         
-        $filename = $fileurl;  //File that resides on your server
-        $byteArr = file_get_contents($filename); 
-        $key = "YourKey";
-        $password = "Password";
-        $atservices_wsdl = "http://www.cvparseapi.com/cvparseapi.asmx?WSDL";
-
-        try {
-          $atservices_client = new \SoapClient($atservices_wsdl);
-
-          //The names f, fileName, YourKey, Password must match exactly what the service expects (this is case sensitive)
-          $args = array('f' => $byteArr,
-          'fileName' => $filename,
-          'YourKey' => $key,
-          'Password' => $password
-          );
-
-
-          $myXMLData = $atservices_client->ParseResumeNTG($args);
-          return $myXMLData;
-
-        } catch (Exception $e) {
-          return $e->getMessage();
-        }
-
-
     }
+
+    
 }
