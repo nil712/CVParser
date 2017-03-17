@@ -1,0 +1,22 @@
+{
+    "name": "nilesh/bighelp",
+    "description": "CV parsing API",
+    "keywords": [
+	    "cv parser",
+	    "SOAP",
+	    "api"
+	  ],
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "require": {},
+    "require-dev": {
+    	"phpunit/phpunit": "^5.5.4"
+	  },
+	  "scripts": {
+	    "test": "vendor/bin/phpunit"
+	  },
+	  "config": {
+	    "sort-packages": true
+	  }
+
+}
